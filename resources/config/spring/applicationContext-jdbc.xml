@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx" 
+       xmlns:context="http://www.springframework.org/schema/context" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       					   http://www.springframework.org/schema/beans/spring-beans.xsd
+       					   http://www.springframework.org/schema/tx 
+       					   http://www.springframework.org/schema/tx/spring-tx.xsd
+       					   http://www.springframework.org/schema/aop 
+       					   http://www.springframework.org/schema/aop/spring-aop.xsd
+       					   http://www.springframework.org/schema/context 
+       					   http://www.springframework.org/schema/context/spring-context.xsd">
+	<!-- 创建一个HibernateTemplate -->
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	
+	<!-- Spring接管Hibernate中sessionFactory的创建 -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<!-- 指定hibernate的主配置文件 -->
+		<!-- <property name="configLocation" value="classpath:config/hibernate/hibernate.cfg.xml"></property>  -->
+		
+		<!-- 1、使用数据源替换数据库的链接信息 -->
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- 2、Hibernate的基本配置 -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<!-- <prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop> -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<!-- 这个数据源要干掉,不干掉会报错 -->
+				<!-- <prop key="hibernate.connection.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider</prop> -->
+			</props>
+		</property>
+		<!-- 3、映射文件 
+				mappingResources：配置映射文件的位置，需要写映射文件名称。并且有几个映射文件，就要写几个<value></value>。
+				mappingLocations：配置映射文件的位置，需要写映射文件名称。可以使用通配符。【推荐，以后经常用】
+				mappingDirectoryLocations：配置映射文件的位置，直接写到包的目录即可
+		-->
+		<!-- <property name="mappingLocations">
+			<array>
+				<value>classpath:cn/itcast/crm/entity/*.hbm.xml</value>
+			</array>
+		</property> -->
+		<!-- 指定扫描的实体类的包 -->
+		<property name="packagesToScan">
+			<array>
+				<value>com.xiaoma.music.entity</value>
+			</array>
+		</property>
+	</bean>
+	
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="com.mysql.cj.jdbc.Driver"></property>
+		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/music?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=GMT%2B8&amp;useSSL=false"></property>
+		<property name="user" value="root"></property>
+		<property name="password" value="wangtianxiang"></property>
+	</bean>
+	
+	
+</beans>      					   

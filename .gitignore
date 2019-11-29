@@ -1,0 +1,13 @@
+.classpath
+.project
+.settings/*
+**/classes/*
+*.class
+/temp/
+/target/
+.idea/workspace.xml
+.idea/vcs.xml
+.idea/modules.xml
+.idea/misc.xml
+.idea/
+/out/

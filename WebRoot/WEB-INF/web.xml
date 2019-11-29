@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+    <display-name>xiaomaMusic-V3.0</display-name>
+
+
+
+
+
+    <!-- 登录过滤器-->
+    <filter>
+        <filter-name>Login</filter-name>
+        <filter-class>com.xiaoma.music.filter.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Login</filter-name>
+        <url-pattern>/music/toPersonalMusicUI.action</url-pattern>
+        <url-pattern>/jsp/music/upload.jsp</url-pattern>
+    </filter-mapping>
+
+
+    <!--<servlet>
+        <servlet-name>action</servlet-name>
+        <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
+    </servlet>
+-->
+    <!-- opensessioninview ：需要配置在Struts2核心过滤器之前 -->
+    <filter>
+        <filter-name>opensessioninview</filter-name>
+        <filter-class>org.springframework.orm.hibernate5.support.OpenSessionInViewFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>opensessioninview</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
+    <!-- 配置核心过滤器 -->
+    <filter>
+        <filter-name>struts2</filter-name>
+        <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+        <!-- 指定配置文件 -->
+        <init-param>
+            <param-name>config</param-name>
+            <param-value>struts-default.xml,struts-plugin.xml,config/struts/struts.xml</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>struts2</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
+
+    <!-- 配置spring的容器：用监听器实现也给项目只有一个容器 -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:/config/spring/applicationContext.xml</param-value>
+    </context-param>
+
+
+
+    <welcome-file-list>
+        <welcome-file>jsp/default.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>

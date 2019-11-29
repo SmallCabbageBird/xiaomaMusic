@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<!-- 开发者模式 --> 
+	<constant name="struts.devMode" value="true"></constant>
+	<!-- 上传文件允许的最大文件大小 -->
+	<constant name="struts.multipart.maxSize" value="209715200"/> 
+	<!-- 去掉struts2的默认样式 -->
+	<constant name="struts.ui.theme" value="simple"></constant>
+	<!-- 公共包 -->
+	<package name="myDefault" extends="struts-default" abstract="true">
+		<!-- 公共配置,没有就留空 -->
+		<global-results>
+			<result name="success" type="redirect">/jsp/success.jsp</result>
+			<result name="erro" type="redirect">/jsp/erro.jsp</result>
+		</global-results>
+	
+	</package>
+	
+
+</struts>	
